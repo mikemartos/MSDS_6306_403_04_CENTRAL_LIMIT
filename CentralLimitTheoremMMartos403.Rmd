@@ -1,0 +1,314 @@
+---
+title: "Central Limit Theorem"
+author: "Mike Martos"
+date: "May 28, 2016"
+output: 
+  html_document:
+    keep_md: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Example 01: Starting from a normal distribution with a sample size 100
+```{r NormalDistribution10}
+#Original Sample
+origSample <- rnorm(100, 0, 1)
+
+#Show summary of original sampple
+summary(origSample)
+
+#Store measurements from original sample
+origMean <- mean(origSample)
+origMedian <- median(origSample)
+origSD <- sd(origSample)
+origVar <- var(origSample)
+
+#Plot a histogram of Original Sample
+hist(origSample)
+
+#Start Iterarion process
+nsim <- 1000
+meanArray <- numeric(nsim)
+medianArray <- numeric(nsim)
+
+for (i in 1:nsim) {
+  bootsample <- sample(origSample, size = 100, replace = TRUE)
+  meanArray[i] <- mean(bootsample)
+  medianArray[i] <- median(bootsample)
+}
+
+#Plot histogram of array of means after process
+hist(meanArray)
+
+#Plot lines with significant quantities Original Mean, New Mean, Quantiles
+abline(v=origMean,col="red", lwd=2)
+abline(v=mean(meanArray),col="blue", lty=3, lwd=2)
+meanQuant <- quantile(meanArray, c(0.025, 0.975))
+abline(v=meanQuant[1],col="green")
+abline(v=meanQuant[2],col="green")
+
+#Plot histogram of array of medians after process
+hist(medianArray)
+
+#Plot lines with significant quantities Original Mean, New Mean, Quantiles
+abline(v=origMedian,col="red", lwd=2)
+abline(v=median(medianArray),col="blue", lty=3, lwd=2)
+meanQuant <- quantile(medianArray, c(0.025, 0.975))
+abline(v=meanQuant[1],col="green")
+abline(v=meanQuant[2],col="green")
+
+#Show Original statistics
+origMean
+origMedian
+origSD
+origVar
+
+#Show New statistics
+mean(meanArray)
+median(medianArray)
+sd(medianArray)
+var(medianArray)
+
+# Show boxplots side by side
+lmts <- range(origSample, meanArray)
+par(mfrow = c(1, 2))
+boxplot(origSample, ylim=lmts, xlab="Original Sample")
+boxplot(meanArray, ylim=lmts, xlab="After bootsrap process")
+```
+
+# Example 02: Starting from a normal distribution with a sample size 10
+```{r NormalDistribution50}
+#Original Sample
+origSample <- rnorm(10, 0, 1)
+
+#Show summary of original sampple
+summary(origSample)
+
+#Store measurements from original sample
+origMean <- mean(origSample)
+origMedian <- median(origSample)
+origSD <- sd(origSample)
+origVar <- var(origSample)
+
+#Plot a histogram of Original Sample
+hist(origSample)
+
+#Start Iterarion process
+nsim <- 1000
+meanArray <- numeric(nsim)
+medianArray <- numeric(nsim)
+
+for (i in 1:nsim) {
+  bootsample <- sample(origSample, size = 10, replace = TRUE)
+  meanArray[i] <- mean(bootsample)
+  medianArray[i] <- median(bootsample)
+}
+
+#Plot histogram of array of means after process
+hist(meanArray)
+
+#Plot lines with significant quantities Original Mean, New Mean, Quantiles
+abline(v=origMean,col="red", lwd=2)
+abline(v=mean(meanArray),col="blue", lty=3, lwd=2)
+meanQuant <- quantile(meanArray, c(0.025, 0.975))
+abline(v=meanQuant[1],col="green")
+abline(v=meanQuant[2],col="green")
+
+#Plot histogram of array of medians after process
+hist(medianArray)
+
+#Plot lines with significant quantities Original Mean, New Mean, Quantiles
+abline(v=origMedian,col="red", lwd=2)
+abline(v=median(medianArray),col="blue", lty=3, lwd=2)
+meanQuant <- quantile(medianArray, c(0.025, 0.975))
+abline(v=meanQuant[1],col="green")
+abline(v=meanQuant[2],col="green")
+
+#Show Original statistics
+origMean
+origMedian
+origSD
+origVar
+
+#Show New statistics
+mean(meanArray)
+median(medianArray)
+sd(medianArray)
+var(medianArray)
+
+# Show boxplots side by side
+lmts <- range(origSample, meanArray)
+par(mfrow = c(1, 2))
+boxplot(origSample, ylim=lmts, xlab="Original Sample")
+boxplot(meanArray, ylim=lmts, xlab="After bootsrap process")
+```
+
+# Example 03: Starting from a normal distribution with a sample size 50
+```{r ExpDistribution50}
+#Original Sample
+origSample <- rexp(50)
+
+#Show summary of original sampple
+summary(origSample)
+
+#Store measurements from original sample
+origMean <- mean(origSample)
+origMedian <- median(origSample)
+origSD <- sd(origSample)
+origVar <- var(origSample)
+
+#Plot a histogram of Original Sample
+hist(origSample)
+
+#Start Iterarion process
+nsim <- 1000
+meanArray <- numeric(nsim)
+medianArray <- numeric(nsim)
+
+for (i in 1:nsim) {
+  bootsample <- sample(origSample, size = 50, replace = TRUE)
+  meanArray[i] <- mean(bootsample)
+  medianArray[i] <- median(bootsample)
+}
+
+#Plot histogram of array of means after process
+hist(meanArray)
+
+#Plot lines with significant quantities Original Mean, New Mean, Quantiles
+abline(v=origMean,col="red", lwd=2)
+abline(v=mean(meanArray),col="blue", lty=3, lwd=2)
+meanQuant <- quantile(meanArray, c(0.025, 0.975))
+abline(v=meanQuant[1],col="green")
+abline(v=meanQuant[2],col="green")
+
+
+#Plot histogram of array of medians after process
+hist(medianArray)
+
+#Plot lines with significant quantities Original Mean, New Mean, Quantiles
+abline(v=origMedian,col="red", lwd=2)
+abline(v=median(medianArray),col="blue", lty=3, lwd=2)
+meanQuant <- quantile(medianArray, c(0.025, 0.975))
+abline(v=meanQuant[1],col="green")
+abline(v=meanQuant[2],col="green")
+
+#Show Original statistics
+origMean
+origMedian
+origSD
+origVar
+
+#Show New statisticsmean(meanArray)
+median(medianArray)
+sd(medianArray)
+var(medianArray)
+
+# Show boxplots side by side
+lmts <- range(origSample, meanArray)
+par(mfrow = c(1, 2))
+boxplot(origSample, ylim=lmts, xlab="Original Sample")
+boxplot(meanArray, ylim=lmts, xlab="After bootsrap process")
+
+```
+
+# Example 04: Starting from a normal distribution with a sample size 10 
+```{r ExpDistribution10}
+#Original Sample
+origSample <- rexp(10)
+
+#Show summary of original sampple
+summary(origSample)
+
+#Store measurements from original sample
+origMean <- mean(origSample)
+origMedian <- median(origSample)
+origSD <- sd(origSample)
+origVar <- var(origSample)
+
+#Plot a histogram of Original Sample
+hist(origSample)
+
+#Start Iterarion process
+nsim <- 1000
+meanArray <- numeric(nsim)
+medianArray <- numeric(nsim)
+
+for (i in 1:nsim) {
+  bootsample <- sample(origSample, size = 10, replace = TRUE)
+  meanArray[i] <- mean(bootsample)
+  medianArray[i] <- median(bootsample)
+}
+
+#Plot histogram of array of means after process
+hist(meanArray)
+
+#Plot lines with significant quantities Original Mean, New Mean, Quantiles
+abline(v=origMean,col="red", lwd=2)
+abline(v=mean(meanArray),col="blue", lty=3, lwd=2)
+meanQuant <- quantile(meanArray, c(0.025, 0.975))
+abline(v=meanQuant[1],col="green")
+abline(v=meanQuant[2],col="green")
+
+#Plot histogram of array of means after process
+hist(medianArray)
+
+#Plot lines with significant quantities Original Mean, New Mean, Quantiles
+abline(v=origMedian,col="red", lwd=2)
+abline(v=median(medianArray),col="blue", lty=3, lwd=2)
+meanQuant <- quantile(medianArray, c(0.025, 0.975))
+abline(v=meanQuant[1],col="green")
+abline(v=meanQuant[2],col="green")
+
+#Show Original statistics
+origMean
+origMedian
+origSD
+origVar
+
+#Show New statisticsmean(meanArray)
+median(medianArray)
+sd(medianArray)
+var(medianArray)
+
+
+# Show boxplots side by side
+lmts <- range(origSample, meanArray)
+par(mfrow = c(1, 2))
+boxplot(origSample, ylim=lmts, xlab="Original Sample")
+boxplot(meanArray, ylim=lmts, xlab="After bootsrap process")
+
+```
+
+#Observations:
+
+I've used two measures of center (*Mean and Median*) to graph the differences, knowing that the Central limit theorem involves the *mean* and not the *median*, and also that the bootstrapping process works well with statistics that involve the whole data set.
+
+My intention was to observe graphically, the behavior of both measures of center, a resistant and a nonresistant one.
+
+Examples 01 and 02 start from an already normal distributed sample and the last two from an exponential sample.
+
+
+###After visual observation of the output of this code, I could identify several things:
+
+* With more observations in a sample the likelihood of getting **larger observations** is higher, on both, normal distribution and exponential distribution.
+
+* On examples starting from a normal distribution already, the spread gets tighter after the bootstrap process, it is still nearly normal but the variance and standard error become smaller.
+
+* On examples 03 and 04 that start with an exponential distribution, after the bootstrap process the means of the samples show a nearly normal distribution.
+
+* *Means* before and after the bootstrap process are very close to each other.
+
+* *Medians* before and after seem to be the same every time I've ran this code.
+
+* The bootstrapping process works well with *means* but not so well with *medians*, the distributions are not normal, which is expected as the ***Central Limit Theorem*** is based on the *mean*.
+
+
+
+
+
+
+
+
+
